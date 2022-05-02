@@ -7,12 +7,8 @@ from sklearn import metrics
 import pickle as pickle
 import pandas as pd
 
+
 # Multinomial Naive Bayes Classifier
-from sklearn.model_selection import GridSearchCV
-
-from src.classification.read_and_split_data import get_and_split_data
-
-
 def naive_bayes_classifier(train_x, train_y):
     from sklearn.naive_bayes import GaussianNB
     model = GaussianNB()
