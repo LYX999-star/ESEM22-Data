@@ -1,4 +1,4 @@
-
+# Read bug-fix related files from the specified path
 def get_bug_fixed_files(path):
     bug_fixed_files = []
 

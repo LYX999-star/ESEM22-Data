@@ -3,7 +3,7 @@ import json
 import networkx as nx
 
 
-# 从xxx.json文件中读取依赖结构，返回networkx有向图
+# Reads the dependency structure from the specified path and returns a directed graph in networkx format
 def read_structure(path):
     with open(path, 'r', encoding='utf-8') as f:
         s = f.read()
