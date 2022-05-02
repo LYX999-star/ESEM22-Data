@@ -11,7 +11,8 @@ from read_structure import read_structure
 from cmp_subgraph import cmp_subgraph
 
 
-# Interplay Calculation: Computing interactions between dependency structures and bug fixed files using greedy strategies
+# Interplay Calculation:
+# Computing interactions between dependency structures and bug fixed files using greedy strategies
 def compute_interactions(target_set, HS):
     used = np.zeros(len(HS))
     arch_root_subspace = []
@@ -94,31 +95,11 @@ def main():
     precision, recall, f1, arch_root_subspace = compute_interactions(set(bug_fixed_files), subspaces)
 
     print('===============================')
-    print('Precision:', '%.2f%%'%(precision*100))
-    print('Recall:', '%.2f%%'%(recall*100))
-    print('F1-Measure:', '%.2f%%'%(f1*100))
+    print('Precision:', '%.2f%%' % (precision * 100))
+    print('Recall:', '%.2f%%' % (recall * 100))
+    print('F1-Measure:', '%.2f%%' % (f1 * 100))
     print('===============================')
-
 
 
 if __name__ == '__main__':
     main()
-
-    '''
-        example:Calculating the interaction of historical dependencies with bug fixed files on caffe projects
-            '''
-    # bug_fixed_path = r'E:\opensource\Indirect Dependency\ESEM22-Data\Bug Fix Collection\bug_fixed_files\caffe.txt'
-    # # 读取bug_fixed_files
-    # bug_fixed_files = get_bug_fixed_files(bug_fixed_path)
-    # # 读取dependency structure
-    # structure_path = r'E:\opensource\Indirect Dependency\ESEM22-Data\Dependency Structures\semantic\caffe.json'
-    # structure = read_structure(structure_path)
-    # # 根据依赖图计算其子层次结构:依赖图中的节点名称为根路径开头的文件名
-    # subspaces = cmp_subgraph(structure)
-    # precision, recall, f1, arch_root_subspace = compute_interactions(set(bug_fixed_files), subspaces)
-    # print('===============================')
-    # print('Precision:', '%.2f%%'%(precision*100))
-    # print('Recall:', '%.2f%%'%(recall*100))
-    # print('F1-Measure:', '%.2f%%'%(f1*100))
-    # print('===============================')
-

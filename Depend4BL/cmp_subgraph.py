@@ -3,13 +3,10 @@ from queue import Queue
 
 # Calculate corresponding subgraph based on the incoming dependency graph
 def cmp_subgraph(G):
-    # Collection of subgraph structures
     subgraphs = []
 
     for first_node in G.nodes():
-        # subgraph structure
         subgraph = []
-        # fifo queue
         q = Queue()
         q.put(first_node)
         used_nodes = set()
