@@ -16,7 +16,6 @@ if __name__ == '__main__':
             i = 0
             while i+5 < len(lines):
                 i += 3
-                # f1
                 res.append(['','','',float(lines[i][:-1].split(':')[-1]), float(lines[i+1][:-1].split(':')[-1])])
                 i += 3
             print(res)

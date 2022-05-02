@@ -6,6 +6,7 @@ import numpy as np
 from sklearn import metrics
 import pickle as pickle
 import pandas as pd
+from src.classification.read_and_split_data import get_and_split_data
 
 
 # Multinomial Naive Bayes Classifier
@@ -35,7 +36,6 @@ def logistic_regression_classifier(train_x, train_y):
 # Random Forest Classifier
 def random_forest_classifier(train_x, train_y):
     from sklearn.ensemble import RandomForestClassifier
-    # model = RandomForestClassifier(n_estimators=8)
     model = RandomForestClassifier(n_estimators=220, min_samples_leaf=10, min_samples_split=30, max_depth=8,
                                    random_state=10,
                                    criterion='gini', class_weight=None)
@@ -62,7 +62,6 @@ def gradient_boosting_classifier(train_x, train_y):
 # XGB(XGBoost) Classifier
 def XGBoost_classifier(train_x, train_y):
     from xgboost import XGBClassifier
-    # model = XGBR(n_estimators=100)
     model = XGBClassifier(learning_rate=0.1, n_estimators=100, max_depth=9, min_child_weight=1,
                           subsample=0.6, colsample_bytree=0.8, gamma=0.4, reg_alpha=1, reg_lambda=0.01)
     model.fit(train_x, train_y)
@@ -73,21 +72,6 @@ def XGBoost_classifier(train_x, train_y):
 def svm_classifier(train_x, train_y):
     from sklearn.svm import SVC
     model = SVC(kernel='rbf', probability=True)
-    model.fit(train_x, train_y)
-    return model
-
-
-# SVM Classifier using cross validation
-def svm_cross_validation(train_x, train_y):
-    from sklearn.svm import SVC
-    model = SVC(kernel='rbf', probability=True)
-    param_grid = {'C': [1e-3, 1e-2, 1e-1, 1, 10, 100, 1000], 'gamma': [0.001, 0.0001]}
-    grid_search = GridSearchCV(model, param_grid, n_jobs=1, verbose=1)
-    grid_search.fit(train_x, train_y)
-    best_parameters = grid_search.best_estimator_.get_params()
-    for para, val in list(best_parameters.items()):
-        print(para, val)
-    model = SVC(kernel='rbf', C=best_parameters['C'], gamma=best_parameters['gamma'], probability=True)
     model.fit(train_x, train_y)
     return model
 
@@ -104,23 +88,18 @@ def read_data(data_file):
 
 
 def patch(project, K=5):
-    # data_file = "H:\\Research\\data\\trainCG.csv"
-    thresh = 0.5
     model_save_file = None
     model_save = {}
 
     result = []
 
     test_classifiers = [
-        'DT',  # 1
-        'NB',  # 2
-        'SVM',  # 3
-        'LR',  # 4
-        'RF',  # 5
-        'XGB',  # 6 XGBoost
-        # 'SVMCV',
-        # 'GBDT',  # Gradient Boosting Decision Tree
-        # 'KNN',
+        'DT',
+        'NB',
+        'SVM',
+        'LR',
+        'RF',
+        'XGB',
     ]
     classifiers = {
         'NB': naive_bayes_classifier,
@@ -129,7 +108,6 @@ def patch(project, K=5):
         'RF': random_forest_classifier,
         'DT': decision_tree_classifier,
         'SVM': svm_classifier,
-        # 'SVMCV': svm_cross_validation,
         'GBDT': gradient_boosting_classifier,
         'XGB': XGBoost_classifier
     }
@@ -140,7 +118,6 @@ def patch(project, K=5):
         project)
 
     train_X, train_Y, test_X, test_Y = get_and_split_data(data_path, K)
-    # train_x, train_y, test_x, test_y = train_x[0], train_y[0], test_x[0], test_y[0]
 
     for classifier in test_classifiers[:]:
         AUC = 0
@@ -166,8 +143,6 @@ def patch(project, K=5):
             accuracy = metrics.accuracy_score(test_y, predict)
             f1 = metrics.f1_score(test_y, predict)
             auc_score = metrics.roc_auc_score(test_y, predict)
-
-            # print(auc_score, accuracy, f1)
 
             if auc_score > AUC:
                 AUC, ACC, F1 = auc_score, accuracy, f1

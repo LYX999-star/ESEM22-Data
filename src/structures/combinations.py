@@ -48,7 +48,6 @@ def combine_or(project, name, *graphs):
 def get_combinations(project):
     syntactic, history, semantic = get_all_dependency(project)
 
-    # &&
     # syntactic_and_history
     syntactic_and_history = combine_and(project, 'syntactic_and_history', syntactic, history)
     # syntactic_and_semantic
@@ -58,7 +57,7 @@ def get_combinations(project):
     # syntactic_and_history_and_semantic
     syntactic_and_history_and_semantic = combine_and(project, 'syntactic_and_history_and_semantic', syntactic, history,
                                                      semantic)
-    # ||
+
     # syntactic_or_history
     syntactic_or_history = combine_or(project, 'syntactic_or_history', syntactic, history)
     # syntactic_or_semantic
@@ -97,8 +96,8 @@ def get_all_dependency(project):
     prefix = 'E:\\opensource\\Indirect Dependency\\DL-datasets\\{0}\\'.format(project)
     depends_dir_py = 'E:\\opensource\\Indirect Dependency\\DL-output\\depends\\{0}_py.json'.format(project)
     depends_dir_cpp = 'E:\\opensource\\Indirect Dependency\\DL-output\\depends\\{0}_cpp.json'.format(project)
-    # syntactic
 
+    # syntactic
     dependency_type = 'syntactic'
     saved_path = saved_format.format(project, dependency_type)
     if os.path.isfile(saved_path):
